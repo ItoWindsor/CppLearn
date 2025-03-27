@@ -16,7 +16,10 @@ class DataFrame {
         std::vector<std::string> column_names;
     public:
         static DataFrame read_csv(const std::string& filename, char delimiter = ',');
-        void head(int n) const;
+        void head(const uint n) const;
+        void tail(const uint n) const;
+
+        void to_csv(const std::string& filename,char delimiter = ',') const;
 };
 
 #endif

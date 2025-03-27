@@ -46,7 +46,7 @@ DataFrame DataFrame::read_csv(const std::string& filename, char delimiter) {
     return df;
 }
 
-void DataFrame::head(const int n) const {
+void DataFrame::head(const uint n) const {
     for (const std::string& name : column_names) {
         std::cout << name << " " ;
     }
@@ -55,6 +55,22 @@ void DataFrame::head(const int n) const {
     const size_t display_num_rows = std::min(data.begin()->second.size(), static_cast<size_t>(n));
 
     for (size_t i = 0; i < display_num_rows; i++) {
+        for (const std::string& name : column_names) {
+            std::visit([](auto&& value) { std::cout << value << "\t"; }, data.at(name)[i]);
+        }
+        std::cout << "\n";
+    }
+}
+
+void DataFrame::tail(const uint n) const {
+    for (const std::string& name : column_names) {
+        std::cout << name << " " ;
+    }
+    std::cout << "\n----------------------------------" << std::endl;
+
+    const size_t display_num_rows = std::min(data.begin()->second.size(), static_cast<size_t>(n));
+
+    for(size_t i = data.begin()->second.size() - display_num_rows; i < data.begin()->second.size() ; i++) {
         for (const std::string& name : column_names) {
             std::visit([](auto&& value) { std::cout << value << "\t"; }, data.at(name)[i]);
         }
