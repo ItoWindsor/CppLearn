@@ -1,2 +1,45 @@
+# Mac stuff
 .DS_Store
-.idea
+
+# Clion/Jetbrains stuff
+.idea/
+cmake-build-debug/
+cmake-build-release/
+
+external/
+
+# CMake build files
+CMakeUserPresets.json
+CMakePresets.json
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
+# Conan files
+conan.lock
+conanbuild.sh
+conanrun.sh
+conanbuildenv-*.sh
+conanrunenv-*.sh
+deactivate_conanbuild.sh
+deactivate_conanrun.sh
+conan_toolchain.cmake
+conandeps_legacy.cmake
+conanbuildinfo.cmake
+graph_info.json
+
+# Compiled binaries & object files
+CppLearn
+*.o
+*.so
+*.a
+*.out
+*.exe
+
+# Logs & temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
