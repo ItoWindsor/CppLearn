@@ -1,6 +1,5 @@
 #include <iostream>
 #include "core/dataframe.hpp"
-#include <filesystem>
 
 int main() {
     std::cout << "Hello, World!\n";
