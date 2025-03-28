@@ -6,7 +6,11 @@
 cmake-build-debug/
 cmake-build-release/
 
+
 external/
+
+.cache/
+build/
 
 # CMake build files
 CMakeUserPresets.json
