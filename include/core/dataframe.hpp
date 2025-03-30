@@ -18,9 +18,11 @@ class DataFrame {
         DataFrame() = default;
         DataFrame(const DataFrame& other);
         static DataFrame read_csv(const std::string& filename, char delimiter = ',');
-        void head(int n) const;
         Eigen::MatrixXd get_values(); 
         DataFrame operator[](const std::vector<std::string>& column_names) const;
+        void head(const uint n) const;
+        void tail(const uint n) const;
+        void to_csv(const std::string& filename,char delimiter = ',') const;
 };
 
 

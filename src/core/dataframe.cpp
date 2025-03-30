@@ -85,7 +85,7 @@ DataFrame DataFrame::read_csv(const std::string& filename, char delimiter) {
 
 
 
-void DataFrame::head(const int n) const {
+void DataFrame::head(const uint n) const {
     for (const std::string& name : column_names) {
         std::cout << name << " " ;
     }
@@ -100,7 +100,6 @@ void DataFrame::head(const int n) const {
         std::cout << "\n";
     }
 }
-
 
 Eigen::MatrixXd DataFrame::get_values() {
   size_t ncols = data.size();
@@ -159,7 +158,18 @@ DataFrame DataFrame::operator[](const std::vector<std::string>& column_names) co
     return df;
 }
 
+void DataFrame::tail(const uint n) const {
+    for (const std::string& name : column_names) {
+        std::cout << name << " " ;
+    }
+    std::cout << "\n----------------------------------" << std::endl;
 
+    const size_t display_num_rows = std::min(data.begin()->second.size(), static_cast<size_t>(n));
 
-
-
+    for(size_t i = data.begin()->second.size() - display_num_rows; i < data.begin()->second.size() ; i++) {
+        for (const std::string& name : column_names) {
+            std::visit([](auto&& value) { std::cout << value << "\t"; }, data.at(name)[i]);
+        }
+        std::cout << "\n";
+    }
+}
