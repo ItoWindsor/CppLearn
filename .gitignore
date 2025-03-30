@@ -3,8 +3,6 @@
 
 # Clion/Jetbrains stuff
 .idea/
-cmake-build-debug/
-cmake-build-release/
 
 
 external/
@@ -17,8 +15,8 @@ CMakeUserPresets.json
 CMakePresets.json
 CMakeCache.txt
 CMakeFiles/
-Makefile
 cmake_install.cmake
+compile_commands.json
 
 # Conan files
 conan.lock

@@ -5,6 +5,8 @@ project(CppLearn)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
+set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -g -O0")
+set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -O3")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -33,7 +35,7 @@ file(GLOB_RECURSE HEADERS "${INCLUDE_DIR}/*.hpp")
 
 # Add executable
 add_executable(CppLearn main.cpp ${SOURCES})
-
+target_compile_options(CppLearn PRIVATE $<$<CONFIG:Debug>:-Wall -Wextra -g -O0> $<$<CONFIG:Release>:-Wall -Wextra -O3>)
 # Link dependencies
 target_link_libraries(CppLearn PRIVATE Eigen3::Eigen ${CONAN_LIBS})
 
@@ -43,6 +45,7 @@ if(EXISTS ${TEST_DIR})
     file(GLOB_RECURSE TEST_SOURCES "${TEST_DIR}/*.cpp")
     add_executable(run_tests ${TEST_SOURCES} ${SOURCES})
     target_include_directories(run_tests PRIVATE ${INCLUDE_DIR})
+    target_compile_options(run_tests PRIVATE $<$<CONFIG:Debug>:-Wall -Wextra -g -O0> $<$<CONFIG:Release>:-Wall -Wextra -O3>)
     target_link_libraries(run_tests PRIVATE Eigen3::Eigen GTest::gtest GTest::gtest_main ${CONAN_LIBS})
     add_test(NAME CppLearnTests COMMAND run_tests)
 endif()
