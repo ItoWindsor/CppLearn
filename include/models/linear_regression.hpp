@@ -8,13 +8,14 @@ class LinearRegression : public BaseModel {
 
 public:
   LinearRegression();
-  void fit(const Eigen::MatrixXd &X, const Eigen::VectorXd &y,
+  void fit(const Eigen::MatrixXd &X, const Eigen::MatrixXd &y,
            std::string fit_method = "analytical") override;
-  Eigen::VectorXd predict(const Eigen::MatrixXd &X) const override;
-
+  Eigen::VectorXd predict(const Eigen::MatrixXd& X) const override;
+  double score(const Eigen::MatrixXd& X,const Eigen::VectorXd& y) const override;
   void save_model(const std::string &filename) const override;
   void load_model(const std::string &filename) override;
-
+  
+  void print_parameters() const override;
 private:
   Eigen::VectorXd weights;
   double bias;
