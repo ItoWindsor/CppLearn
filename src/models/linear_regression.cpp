@@ -1,6 +1,5 @@
 #include "models/linear_regression.hpp"
 #include <Eigen/Dense>
-#include <vector>
 #include <iostream>
 
 LinearRegression::LinearRegression()
@@ -33,14 +32,13 @@ void LinearRegression::load_model(const std::string &filename) {
   // Implement loading model parameters from a file
 }
 
-double score(const std::vector<std::vector<double>> &X,
-             const std::vector<double> &y) {
-  return 0.0;
-}
 
-Eigen::VectorXd LinearRegression::predict(const Eigen::MatrixXd &X) const {
-  // Implement a proper prediction function
-  return Eigen::VectorXd::Zero(X.rows()); // Placeholder
+Eigen::VectorXd LinearRegression::predict(const Eigen::MatrixXd &X) const {  
+  Eigen::VectorXd predictions = Eigen::VectorXd::Zero(X.rows()); 
+  for(int i = 0; i < X.rows(); ++i){
+    predictions[i] = X.row(i).dot(weights) + bias; 
+  }  
+  return predictions;
 }
 
 void LinearRegression::print_parameters() const{
