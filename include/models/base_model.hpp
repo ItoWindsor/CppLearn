@@ -2,11 +2,12 @@
 #define BASE_MODEL_HPP
 
 #include <Eigen/Dense>
+#include <Eigen/src/Core/Matrix.h>
 
 class BaseModel {
     public:
         virtual ~BaseModel() = default;
-        virtual void fit(const Eigen::MatrixXd& X, const Eigen::MatrixXd& y, std::string method) = 0;
+        virtual void fit(const Eigen::MatrixXd& X, const Eigen::VectorXd& y, std::string method, float eps, int n_iter) = 0;
         virtual Eigen::VectorXd predict(const Eigen::MatrixXd& X) const = 0;
         virtual double score(const Eigen::MatrixXd& X,const Eigen::VectorXd& y) const = 0;
 

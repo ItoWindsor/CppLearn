@@ -16,12 +16,24 @@ double LinearRegression::score(const Eigen::MatrixXd& X, const Eigen::VectorXd& 
 
 void LinearRegression::fit(
   const Eigen::MatrixXd& X,
-  const Eigen::MatrixXd& y,
-  const std::string method) {
+  const Eigen::VectorXd& y,
+  const std::string method,
+  float eps,
+  int n_iter) {
+
     if (method == "analytical") {
       weights = (X.transpose() * X).inverse() * X.transpose() * y;
       bias = y.mean() - X.colwise().mean().dot(weights);
-      }
+    }
+
+    else if (method == "newton") { 
+      
+    }
+
+    else if (method == "gradient descent"){
+
+    }
+  
 }
 
 void LinearRegression::save_model(const std::string &filename) const {
