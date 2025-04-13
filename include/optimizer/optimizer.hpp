@@ -14,8 +14,8 @@ public:
   Optimizer(ScalarFunc obj_func);
   Optimizer(MatrixFunc obj_func);
   
-  virtual float compute_min(float x0, float eps, int n_iter) = 0; 
-  virtual Eigen::MatrixXd compute_min(Eigen::MatrixXd& X0, float eps, int n_iter) const = 0; 
+  virtual float compute_root(float x0, float eps, int n_iter) = 0; 
+  virtual Eigen::MatrixXd compute_root(Eigen::MatrixXd& X0, float eps, int n_iter) const = 0; 
   
   const std::variant<ScalarFunc, MatrixFunc>& get_objective_func() const;
     

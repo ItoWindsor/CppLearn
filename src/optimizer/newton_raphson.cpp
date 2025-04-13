@@ -15,7 +15,7 @@ const std::variant<ScalarFunc, MatrixFunc>&  NewtonRaphsonOptimizer::get_derivat
   return derivative_objective_func;
 }
 
-float NewtonRaphsonOptimizer::compute_min(float x0, float eps, int n_iter) {
+float NewtonRaphsonOptimizer::compute_root(float x0, float eps, int n_iter) {
     try {
         if (!std::holds_alternative<ScalarFunc>(get_objective_func())) {
             throw std::runtime_error("Objective function is not of type ScalarFunc.");
@@ -46,21 +46,19 @@ float NewtonRaphsonOptimizer::compute_min(float x0, float eps, int n_iter) {
 
         return xk;
     } catch (const std::exception& e) {
-        // Enhanced exception handling: log detailed context
         std::cerr << "Exception caught: " << e.what() << std::endl;
-
-        // Rethrow the exception with additional context
         throw std::runtime_error("Error in Newton-Raphson optimizer: " + std::string(e.what()));
     }
 }
 
 
-Eigen::MatrixXd NewtonRaphsonOptimizer::compute_min(Eigen::MatrixXd& X0, float eps, int n_iter) const{
+Eigen::MatrixXd NewtonRaphsonOptimizer::compute_root(Eigen::MatrixXd& X0, float eps, int n_iter) const{
   const MatrixFunc& f = std::get<MatrixFunc>(objective_func);
   const MatrixFunc& f_prime = std::get<MatrixFunc>(derivative_objective_func);
   
   Eigen::MatrixXd xk = X0;
   int count = 0;
+  
   
   return xk;
 }

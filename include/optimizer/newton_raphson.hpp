@@ -8,8 +8,8 @@ class NewtonRaphsonOptimizer : public Optimizer {
 public:
   NewtonRaphsonOptimizer(ScalarFunc obj_func, ScalarFunc derivative_objc_func);
   NewtonRaphsonOptimizer(MatrixFunc obj_func, MatrixFunc derivative_objective_func);
-  float compute_min(float x0, float eps, int n_iter);
-  Eigen::MatrixXd compute_min(Eigen::MatrixXd& X0, float eps, int n_iter) const;
+  float compute_root(float x0, float eps, int n_iter);
+  Eigen::MatrixXd compute_root(Eigen::MatrixXd& X0, float eps, int n_iter) const;
 
   const std::variant<ScalarFunc, MatrixFunc>& get_derivative_objective_func() const;
 
