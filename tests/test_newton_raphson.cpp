@@ -2,14 +2,6 @@
 #include "optimizer/newton_raphson.hpp"
 #include <cmath>
 
-float quad(float x){
-  return (x-3)*(x-3);
-}
-
-float quad_prime(float x){
-  return 2*(x-3);
-}
-
 TEST(NewtonRaphsonTest, InitializationTest) {
     // Define simple quadratic function and its derivative
     auto f = [](float x) { return (x - 3) * (x - 3); };
@@ -42,21 +34,48 @@ TEST(NewtonRaphsonTest, InitializationTest) {
     }
 }
 
-TEST(NewtonRaphsonTest, QuadraticFunctionTemp) {
-    NewtonRaphsonOptimizer optimizer(quad, quad_prime);
-    float result = optimizer.compute_min(0.0f, 1e-4f, 100000);    
-    std::cout << "Result: " << result << std::endl;
-    EXPECT_NEAR(result, 3.0f, 0.01);
-}
-
 
 TEST(NewtonRaphsonTest, QuadraticFunction) {
     auto f = [](float x) { return (x - 3) * (x - 3); };
     auto f_prime = [](float x) { return 2 * (x - 3); };
 
     NewtonRaphsonOptimizer optimizer(f, f_prime);
-    float result = optimizer.compute_min(0.0f, 1e-4f, 100);
+    float result = optimizer.compute_root(0.0f, 1e-4f, 100);
 
     std::cout << "Result: " << result << std::endl;
     EXPECT_NEAR(result, 3.0f, 0.01);
 }
+
+
+TEST(NewtonRaphsonTest, CubicFunction) {
+    auto f = [](float x) { return x * x * x - 27; };
+    auto f_prime = [](float x) { return 3 * x * x; };
+
+    NewtonRaphsonOptimizer optimizer(f, f_prime);
+    float result = optimizer.compute_root(3.0f, 1e-4f, 100);
+
+    EXPECT_NEAR(result, 3.0f, 0.01);
+}
+
+TEST(NewtonRaphsonTest, SineFunction) {
+    auto f = [](float x) { return std::sin(x); };
+    auto f_prime = [](float x) { return std::cos(x); };
+
+    NewtonRaphsonOptimizer optimizer(f, f_prime);
+    float result = optimizer.compute_root(1.0f, 1e-4f, 100);
+
+    EXPECT_NEAR(result, 0.0f, 0.01);
+}
+
+TEST(NewtonRaphsonTest, MultipleRoots) {
+    auto f = [](float x) { return x * (x - 2); };  // Roots at 0 and 2
+    auto f_prime = [](float x) { return 2 * x - 2; };
+
+    NewtonRaphsonOptimizer optimizer(f, f_prime);
+    float result = optimizer.compute_root(0.5f, 1e-4f, 100);
+
+    std::cout << "Result: " << result << std::endl;
+    EXPECT_TRUE(result < 0.01f || std::abs(result - 2.0f) < 0.01f);
+}
+
+
