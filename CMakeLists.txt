@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.30)
 project(CppLearn)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_VERBOSE_MAKEFILE OFF)
 
 set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -g -O0")
 set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -O3")
@@ -43,9 +43,16 @@ target_link_libraries(CppLearn PRIVATE Eigen3::Eigen ${CONAN_LIBS})
 if(EXISTS ${TEST_DIR})
     enable_testing()
     file(GLOB_RECURSE TEST_SOURCES "${TEST_DIR}/*.cpp")
-    add_executable(run_tests ${TEST_SOURCES} ${SOURCES})
-    target_include_directories(run_tests PRIVATE ${INCLUDE_DIR})
-    target_compile_options(run_tests PRIVATE $<$<CONFIG:Debug>:-Wall -Wextra -g -O0> $<$<CONFIG:Release>:-Wall -Wextra -O3>)
-    target_link_libraries(run_tests PRIVATE Eigen3::Eigen GTest::gtest GTest::gtest_main ${CONAN_LIBS})
-    add_test(NAME CppLearnTests COMMAND run_tests)
+
+    foreach(test_file ${TEST_SOURCES})
+        get_filename_component(test_name ${test_file} NAME_WE)
+        add_executable(${test_name} ${test_file} ${SOURCES})
+        target_include_directories(${test_name} PRIVATE ${INCLUDE_DIR})
+        target_compile_options(${test_name} PRIVATE 
+            $<$<CONFIG:Debug>:-Wall -Wextra -g -O0> 
+            $<$<CONFIG:Release>:-Wall -Wextra -O3>
+        )
+        target_link_libraries(${test_name} PRIVATE Eigen3::Eigen GTest::gtest GTest::gtest_main ${CONAN_LIBS})
+        add_test(NAME ${test_name} COMMAND ${test_name} --gtest_color=yes --gtest_print_time)
+    endforeach()
 endif()
