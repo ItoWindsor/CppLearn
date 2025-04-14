@@ -1,13 +1,14 @@
 #include <iostream>
-#include "optimizer/newton_raphson.hpp"
 #include <Eigen/Dense>
 #include <stdexcept>
+
+#include "optimizer/newton_raphson.hpp"
 #include "optimizer/optimizer.hpp"
 
 NewtonRaphsonOptimizer::NewtonRaphsonOptimizer(ScalarFunc obj_func, ScalarFunc derivative_objc_func)
   : Optimizer(obj_func), derivative_objective_func(derivative_objc_func) {}
 
-NewtonRaphsonOptimizer::NewtonRaphsonOptimizer(MatrixFunc obj_func, MatrixFunc derivative_obj_func)
+NewtonRaphsonOptimizer::NewtonRaphsonOptimizer(VectorFunc obj_func, MatrixFunc derivative_obj_func)
   : Optimizer(obj_func), derivative_objective_func(derivative_obj_func) {}
 
 
@@ -52,13 +53,23 @@ float NewtonRaphsonOptimizer::compute_root(float x0, float eps, int n_iter) {
 }
 
 
-Eigen::MatrixXd NewtonRaphsonOptimizer::compute_root(Eigen::MatrixXd& X0, float eps, int n_iter) const{
-  const MatrixFunc& f = std::get<MatrixFunc>(objective_func);
-  const MatrixFunc& f_prime = std::get<MatrixFunc>(derivative_objective_func);
+Eigen::VectorXd& NewtonRaphsonOptimizer::compute_root(const Eigen::VectorXd& X0, float eps, int n_iter) const{
+  const VectorFunc& grad = std::get<VectorFunc>(get_objective_func());
+  const MatrixFunc& hessian = std::get<MatrixFunc>(get_derivative_objective_func());
   
-  Eigen::MatrixXd xk = X0;
+  Eigen::VectorXd Xk = X0;
   int count = 0;
   
-  
-  return xk;
+  while( (grad(Xk).array().abs().maxCoeff() > eps) && (count <= n_iter) ){
+    Xk = Xk - hessian(Xk).inverse() * grad(Xk); // inverting is too costly -> find a way to solve a linear system instead 
+    count += 1;
+  }
+
+  return Xk;
 }
+
+
+
+
+
+
