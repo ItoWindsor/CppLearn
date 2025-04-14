@@ -3,12 +3,19 @@
 ## Implementation of Machine Learning models 
 
 ### Linear Regression 
-- Implementation of ridge & lasso 
+- Implementation of ridge & lasso linear regression 
+    - Check what would be the best approach -> new classes OR the regularization is a part of LinearRegresion ? 
+
+### Logistic Regression
+- Implementation of logistic regression 
+
+### Decision Tree
+- Implementation of a base decison tree
 
 ## Implementation of optimizer 
 
 ### Gradient Descent 
-- ...
+- Implementation of the naive gradient descent (alpha / learning rate fixed by the user)
 
 ## DevOps 
 
