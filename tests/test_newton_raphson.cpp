@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "optimizer/newton_raphson.hpp"
 #include <cmath>
+#include "optimizer/newton_raphson.hpp"
 
 TEST(NewtonRaphsonTest, InitializationTest) {
     // Define simple quadratic function and its derivative
